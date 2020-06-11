@@ -41,7 +41,15 @@ select count(distinct a.dsc_pidm),
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '12' and '17' then '12-17'
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '6' and '11' then '6-11'
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  < '6' then '6 and below'
-        end as act_math_range
+        end as act_math_range,
+       case
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '30' and '36' then 1
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '24' and '29' then 2
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '18' and '23' then 3
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '12' and '17' then 4
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '6' and '11' then 5
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  < '6' then 6
+        end as order_by_id
 from students03 a,
      cte_act1 b
 where a.dsc_pidm = spriden_pidm
@@ -58,4 +66,12 @@ where a.dsc_pidm = spriden_pidm
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '12' and '17' then '12-17'
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '6' and '11' then '6-11'
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  < '6' then '6 and below'
-        end;
+        end,
+           case
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '30' and '36' then 1
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '24' and '29' then 2
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '18' and '23' then 3
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '12' and '17' then 4
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  between '6' and '11' then 5
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math))  < '6' then 6
+        end order by order_by_id;
