@@ -14,7 +14,8 @@ where a.dsc_pidm = spriden_pidm
   and a.s_level <> 'GG'
   and a.s_deg_intent <> '0'
   and a.s_entry_action in ('FF', 'FH')
-  and b.act_comp is not null;
+  and b.act_comp is not null
+  order by act_comp, dsc_pidm;
 
 -- ACT Composite Range
 with cte_act_comp as (select spriden_pidm,
