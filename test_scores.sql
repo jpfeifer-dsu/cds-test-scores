@@ -15,7 +15,7 @@ where a.dsc_pidm = spriden_pidm
   and a.s_deg_intent <> '0'
   and a.s_entry_action in ('FF', 'FH')
   and b.act_comp is not null
-  order by act_comp, dsc_pidm;
+order by act_comp, dsc_pidm;
 
 -- ACT Composite Range
 with cte_act_comp as (select spriden_pidm,
@@ -26,7 +26,14 @@ with cte_act_comp as (select spriden_pidm,
                       where spriden_change_ind is null
                         and spriden_entity_ind = 'P')
 
-select count(distinct a.dsc_pidm),
+select case
+           when act_comp between '30' and '36' then 1
+           when act_comp between '24' and '29' then 2
+           when act_comp between '18' and '23' then 3
+           when act_comp between '12' and '17' then 4
+           when act_comp between '6' and '11' then 5
+           when act_comp < '6' then 6
+       end as order_by,
        case
            when act_comp between '30' and '36' then '30-36'
            when act_comp between '24' and '29' then '24-29'
@@ -35,14 +42,7 @@ select count(distinct a.dsc_pidm),
            when act_comp between '6' and '11' then '6-11'
            when act_comp < '6' then '6 and below'
        end as act_math_range,
-       case
-           when act_comp between '30' and '36' then 1
-           when act_comp between '24' and '29' then 2
-           when act_comp between '18' and '23' then 3
-           when act_comp between '12' and '17' then 4
-           when act_comp between '6' and '11' then 5
-           when act_comp < '6' then 6
-       end as order_by_id
+       count(distinct a.dsc_pidm) as student_count
 from students03 a,
      cte_act_comp b
 where a.dsc_pidm = spriden_pidm
@@ -67,8 +67,78 @@ group by case
              when act_comp between '6' and '11' then 5
              when act_comp < '6' then 6
          end
-order by order_by_id;
+order by order_by;
 
+-- ACT English Score
+with cte_act_engl as (select spriden_pidm,
+                             (select sortest_test_score
+                              from saturn.sortest@proddb
+                              where sortest.rowid = f_get_sortest_rowid@proddb(spriden_pidm, 'ADMSTEST', 1)) act_engl
+                      from saturn.spriden@proddb
+                      where spriden_change_ind is null
+                        and spriden_entity_ind = 'P')
+select a.dsc_pidm, b.act_engl
+from students03 a,
+     cte_act_engl b
+where a.dsc_pidm = spriden_pidm
+  and a.dsc_term_code = '201943'
+  and a.s_level <> 'GG'
+  and a.s_deg_intent <> '0'
+  and a.s_entry_action in ('FF', 'FH')
+  and b.act_engl is not null
+order by act_engl, dsc_pidm;
+
+-- ACT English Range
+with cte_act_engl as (select spriden_pidm,
+                             (select sortest_test_score
+                              from saturn.sortest@proddb
+                              where sortest.rowid = f_get_sortest_rowid@proddb(spriden_pidm, 'ADMSTEST', 1)) act_engl
+                      from saturn.spriden@proddb
+                      where spriden_change_ind is null
+                        and spriden_entity_ind = 'P')
+
+select case
+           when act_engl between '30' and '36' then 1
+           when act_engl between '24' and '29' then 2
+           when act_engl between '18' and '23' then 3
+           when act_engl between '12' and '17' then 4
+           when act_engl between '6' and '11' then 5
+           when act_engl < '6' then 6
+       end as order_by,
+       case
+           when act_engl between '30' and '36' then '30-36'
+           when act_engl between '24' and '29' then '24-29'
+           when act_engl between '18' and '23' then '18-23'
+           when act_engl between '12' and '17' then '12-17'
+           when act_engl between '6' and '11' then '6-11'
+           when act_engl < '6' then '6 and below'
+       end as act_math_range,
+       count(distinct a.dsc_pidm) as student_count
+from students03 a,
+     cte_act_engl b
+where a.dsc_pidm = spriden_pidm
+  and a.dsc_term_code = '201943'
+  and a.s_level <> 'GG'
+  and a.s_deg_intent <> '0'
+  and a.s_entry_action in ('FF', 'FH')
+  and act_engl is not null
+group by case
+             when act_engl between '30' and '36' then '30-36'
+             when act_engl between '24' and '29' then '24-29'
+             when act_engl between '18' and '23' then '18-23'
+             when act_engl between '12' and '17' then '12-17'
+             when act_engl between '6' and '11' then '6-11'
+             when act_engl < '6' then '6 and below'
+         end,
+         case
+             when act_engl between '30' and '36' then 1
+             when act_engl between '24' and '29' then 2
+             when act_engl between '18' and '23' then 3
+             when act_engl between '12' and '17' then 4
+             when act_engl between '6' and '11' then 5
+             when act_engl < '6' then 6
+         end
+order by order_by;
 
 -- ACT Math Score
 with cte_act_math as (select spriden_pidm,
@@ -93,7 +163,8 @@ where a.dsc_pidm = spriden_pidm
   and a.s_level <> 'GG'
   and a.s_deg_intent <> '0'
   and a.s_entry_action in ('FF', 'FH')
-  and greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) is not null;
+  and greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) is not null
+order by act_max_math_score, dsc_pidm;
 
 -- ACT Math Range
 with cte_act_math as (select spriden_pidm,
@@ -107,7 +178,18 @@ with cte_act_math as (select spriden_pidm,
                       from saturn.spriden@proddb
                       where spriden_change_ind is null
                         and spriden_entity_ind = 'P')
-select count(distinct a.dsc_pidm),
+select case
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '30' and '36'
+               then 1
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '24' and '29'
+               then 2
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '18' and '23'
+               then 3
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '12' and '17'
+               then 4
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '6' and '11' then 5
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < '6' then 6
+       end as order_by,
        case
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '30' and '36'
                then '30-36'
@@ -121,18 +203,7 @@ select count(distinct a.dsc_pidm),
                then '6-11'
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < '6' then '6 and below'
        end as act_math_range,
-       case
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '30' and '36'
-               then 1
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '24' and '29'
-               then 2
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '18' and '23'
-               then 3
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '12' and '17'
-               then 4
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '6' and '11' then 5
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < '6' then 6
-       end as order_by_id
+       count(distinct a.dsc_pidm) as student_count
 from students03 a,
      cte_act_math b
 where a.dsc_pidm = spriden_pidm
@@ -167,4 +238,4 @@ group by case
                  then 5
              when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < '6' then 6
          end
-order by order_by_id;
+order by order_by;
