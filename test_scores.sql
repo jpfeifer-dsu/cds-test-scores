@@ -27,20 +27,20 @@ with cte_act_comp as (select spriden_pidm,
                         and spriden_entity_ind = 'P')
 
 select case
-           when act_comp between '30' and '36' then 1
-           when act_comp between '24' and '29' then 2
-           when act_comp between '18' and '23' then 3
-           when act_comp between '12' and '17' then 4
-           when act_comp between '6' and '11' then 5
-           when act_comp < '6' then 6
+           when act_comp between 30 and 36 then 1
+           when act_comp between 24 and 29 then 2
+           when act_comp between 18 and 23 then 3
+           when act_comp between 12 and 17 then 4
+           when act_comp between 6 and 11 then 5
+           when act_comp < 6 then 6
        end as order_by,
        case
-           when act_comp between '30' and '36' then '30-36'
-           when act_comp between '24' and '29' then '24-29'
-           when act_comp between '18' and '23' then '18-23'
-           when act_comp between '12' and '17' then '12-17'
-           when act_comp between '6' and '11' then '6-11'
-           when act_comp < '6' then '6 and below'
+           when act_comp between 30 and 36 then '30-36'
+           when act_comp between 24 and 29 then '24-29'
+           when act_comp between 18 and 23 then '18-23'
+           when act_comp between 12 and 17 then '12-17'
+           when act_comp between 6 and 11 then '6-11'
+           when act_comp < 6 then '6 and below'
        end as act_math_range,
        count(distinct a.dsc_pidm) as student_count
 from students03 a,
@@ -52,20 +52,20 @@ where a.dsc_pidm = spriden_pidm
   and a.s_entry_action in ('FF', 'FH')
   and act_comp is not null
 group by case
-             when act_comp between '30' and '36' then '30-36'
-             when act_comp between '24' and '29' then '24-29'
-             when act_comp between '18' and '23' then '18-23'
-             when act_comp between '12' and '17' then '12-17'
-             when act_comp between '6' and '11' then '6-11'
-             when act_comp < '6' then '6 and below'
+             when act_comp between 30 and 36 then '30-36'
+             when act_comp between 24 and 29 then '24-29'
+             when act_comp between 18 and 23 then '18-23'
+             when act_comp between 12 and 17 then '12-17'
+             when act_comp between 6 and 11 then '6-11'
+             when act_comp < 6 then '6 and below'
          end,
          case
-             when act_comp between '30' and '36' then 1
-             when act_comp between '24' and '29' then 2
-             when act_comp between '18' and '23' then 3
-             when act_comp between '12' and '17' then 4
-             when act_comp between '6' and '11' then 5
-             when act_comp < '6' then 6
+             when act_comp between 30 and 36 then 1
+             when act_comp between 24 and 29 then 2
+             when act_comp between 18 and 23 then 3
+             when act_comp between 12 and 17 then 4
+             when act_comp between 6 and 11 then 5
+             when act_comp < 6 then 6
          end
 order by order_by;
 
@@ -98,20 +98,20 @@ with cte_act_engl as (select spriden_pidm,
                         and spriden_entity_ind = 'P')
 
 select case
-           when act_engl between '30' and '36' then 1
-           when act_engl between '24' and '29' then 2
-           when act_engl between '18' and '23' then 3
-           when act_engl between '12' and '17' then 4
-           when act_engl between '6' and '11' then 5
-           when act_engl < '6' then 6
+           when act_engl between 30 and 36 then 1
+           when act_engl between 24 and 29 then 2
+           when act_engl between 18 and 23 then 3
+           when act_engl between 12 and 17 then 4
+           when act_engl between 6 and 11 then 5
+           when act_engl < 6 then 6
        end as order_by,
        case
-           when act_engl between '30' and '36' then '30-36'
-           when act_engl between '24' and '29' then '24-29'
-           when act_engl between '18' and '23' then '18-23'
-           when act_engl between '12' and '17' then '12-17'
-           when act_engl between '6' and '11' then '6-11'
-           when act_engl < '6' then '6 and below'
+           when act_engl between 30 and 36 then '30-36'
+           when act_engl between 24 and 29 then '24-29'
+           when act_engl between 18 and 23 then '18-23'
+           when act_engl between 12 and 17 then '12-17'
+           when act_engl between 6 and 11 then '6-11'
+           when act_engl < 6 then '6 and below'
        end as act_math_range,
        count(distinct a.dsc_pidm) as student_count
 from students03 a,
@@ -123,20 +123,20 @@ where a.dsc_pidm = spriden_pidm
   and a.s_entry_action in ('FF', 'FH')
   and act_engl is not null
 group by case
-             when act_engl between '30' and '36' then '30-36'
-             when act_engl between '24' and '29' then '24-29'
-             when act_engl between '18' and '23' then '18-23'
-             when act_engl between '12' and '17' then '12-17'
-             when act_engl between '6' and '11' then '6-11'
-             when act_engl < '6' then '6 and below'
+             when act_engl between 30 and 36 then '30-36'
+             when act_engl between 24 and 29 then '24-29'
+             when act_engl between 18 and 23 then '18-23'
+             when act_engl between 12 and 17 then '12-17'
+             when act_engl between 6 and 11 then '6-11'
+             when act_engl < 6 then '6 and below'
          end,
          case
-             when act_engl between '30' and '36' then 1
-             when act_engl between '24' and '29' then 2
-             when act_engl between '18' and '23' then 3
-             when act_engl between '12' and '17' then 4
-             when act_engl between '6' and '11' then 5
-             when act_engl < '6' then 6
+             when act_engl between 30 and 36 then 1
+             when act_engl between 24 and 29 then 2
+             when act_engl between 18 and 23 then 3
+             when act_engl between 12 and 17 then 4
+             when act_engl between 6 and 11 then 5
+             when act_engl < 6 then 6
          end
 order by order_by;
 
@@ -185,10 +185,10 @@ select case
                then 2
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '18' and '23'
                then 3
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '12' and '17'
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between 12 and 17
                then 4
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '6' and '11' then 5
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < '6' then 6
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between 6 and 11 then 5
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < 6 then 6
        end as order_by,
        case
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '30' and '36'
@@ -197,11 +197,11 @@ select case
                then '24-29'
            when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '18' and '23'
                then '18-23'
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '12' and '17'
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between 12 and 17
                then '12-17'
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '6' and '11'
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between 6 and 11
                then '6-11'
-           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < '6' then '6 and below'
+           when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < 6 then '6 and below'
        end as act_math_range,
        count(distinct a.dsc_pidm) as student_count
 from students03 a,
@@ -219,11 +219,11 @@ group by case
                  then '24-29'
              when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '18' and '23'
                  then '18-23'
-             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '12' and '17'
+             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between 12 and 17
                  then '12-17'
-             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '6' and '11'
+             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between 6 and 11
                  then '6-11'
-             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < '6' then '6 and below'
+             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < 6 then '6 and below'
          end,
          case
              when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '30' and '36'
@@ -232,10 +232,81 @@ group by case
                  then 2
              when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '18' and '23'
                  then 3
-             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '12' and '17'
+             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between 12 and 17
                  then 4
-             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between '6' and '11'
+             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) between 6 and 11
                  then 5
-             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < '6' then 6
+             when greatest(coalesce(act_math, act_math_new), coalesce(act_math_new, act_math)) < 6 then 6
          end
+order by order_by;
+
+-- ACT Reading Score
+with cte_act_read as (select spriden_pidm,
+                             (select sortest_test_score
+                              from saturn.sortest@proddb
+                              where sortest.rowid = f_get_sortest_rowid@proddb(spriden_pidm, 'ADMSTEST', 4)) act_read
+                      from saturn.spriden@proddb
+                      where spriden_change_ind is null
+                        and spriden_entity_ind = 'P')
+select a.dsc_pidm, b.act_read
+from students03 a,
+     cte_act_read b
+where a.dsc_pidm = spriden_pidm
+  and a.dsc_term_code = '201943'
+  and a.s_level <> 'GG'
+  and a.s_deg_intent <> '0'
+  and a.s_entry_action in ('FF', 'FH')
+  and b.act_read is not null
+order by act_read, dsc_pidm;
+
+-- ACT Reading Range
+with cte_act_read as (select spriden_pidm,
+                             (select sortest_test_score
+                              from saturn.sortest@proddb
+                              where sortest.rowid = f_get_sortest_rowid@proddb(spriden_pidm, 'ADMSTEST', 4)) act_read
+                      from saturn.spriden@proddb
+                      where spriden_change_ind is null
+                        and spriden_entity_ind = 'P')
+
+select case
+           when act_read between 30 and 36 then 1
+           when act_read between 24 and 29 then 2
+           when act_read between 18 and 23 then 3
+           when act_read between 12 and 17 then 4
+           when act_read between 6 and 11 then 5
+           when act_read < 6 then 6
+       end as order_by,
+       case
+           when act_read between 30 and 36 then '30-36'
+           when act_read between 24 and 29 then '24-29'
+           when act_read between 18 and 23 then '18-23'
+           when act_read between 12 and 17 then '12-17'
+           when act_read between 6 and 11 then '6-11'
+           when act_read < 6 then '6 and below'
+       end as act_read_range,
+       count(distinct a.dsc_pidm) as student_count
+from students03 a,
+     cte_act_read b
+where a.dsc_pidm = spriden_pidm
+  and a.dsc_term_code = '201943'
+  and a.s_level <> 'GG'
+  and a.s_deg_intent <> '0'
+  and a.s_entry_action in ('FF', 'FH')
+  and act_read is not null
+group by case
+           when act_read between 30 and 36 then 1
+           when act_read between 24 and 29 then 2
+           when act_read between 18 and 23 then 3
+           when act_read between 12 and 17 then 4
+           when act_read between 6 and 11 then 5
+           when act_read < 6 then 6
+       end,
+       case
+           when act_read between 30 and 36 then '30-36'
+           when act_read between 24 and 29 then '24-29'
+           when act_read between 18 and 23 then '18-23'
+           when act_read between 12 and 17 then '12-17'
+           when act_read between 6 and 11 then '6-11'
+           when act_read < 6 then '6 and below'
+       end
 order by order_by;
