@@ -1,3 +1,7 @@
+/*********************************************************************************************************************
+  ACT Scores:
+ ********************************************************************************************************************/
+
 -- ACT Composite Score
 with cte_act_comp as (select spriden_pidm,
                              (select sortest_test_score
@@ -310,3 +314,26 @@ group by case
            when act_read < 6 then '6 and below'
        end
 order by order_by;
+
+/*********************************************************************************************************************
+  SAT Scores:
+ ********************************************************************************************************************/
+ 
+-- SAT English Score
+with cte_sat_engl as (select spriden_pidm,
+                             (select sortest_test_score
+                              from saturn.sortest@proddb
+                              where sortest.rowid = f_get_sortest_rowid@proddb(spriden_pidm, 'ADMSTEST', 23)) sat_engl
+                      from saturn.spriden@proddb
+                      where spriden_change_ind is null
+                        and spriden_entity_ind = 'P')
+select a.dsc_pidm, b.sat_engl
+from students03 a,
+     cte_sat_engl b
+where a.dsc_pidm = spriden_pidm
+  and a.dsc_term_code = '201943'
+  and a.s_level <> 'GG'
+  and a.s_deg_intent <> '0'
+  and a.s_entry_action in ('FF', 'FH')
+  and b.sat_engl is not null
+order by sat_engl, dsc_pidm;
